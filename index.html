@@ -76,6 +76,8 @@ img,canvas,svg{display:block}
 .nav a b{font-weight:400;color:var(--dim);transition:color .2s}
 .nav a:hover,.nav a.on{color:var(--wh)}
 .nav a:hover b,.nav a.on b{color:var(--ice)}
+.lang-btn{font-family:var(--fm);font-size:11px;letter-spacing:.1em;padding:6px 10px;border:1px solid var(--ln2);color:var(--frost);background:rgba(7,13,25,.6);cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:var(--wh);border-color:var(--ice)}
 .clock{color:var(--mut);white-space:nowrap}
 @media (max-width:1080px){.clock{display:none}}
 @media (max-width:820px){
@@ -557,6 +559,7 @@ input[type=range]::-moz-range-thumb{width:12px;height:18px;border:0;border-radiu
       <a href="#dossier"><b>[</b> DOSSIER <b>]</b></a>
       <a href="#beats"><b>[</b> BEATS <b>]</b></a>
       <a href="#network"><b>[</b> NETWORK <b>]</b></a>
+      <button class="lang-btn" id="langBtn" type="button" aria-label="Switch to English">EN</button>
     </nav>
   </div>
 </header>
@@ -1432,6 +1435,79 @@ setTimeout(() => (window.requestIdleCallback || setTimeout)(prefetchStats), 2500
 const boot = $('#boot');
 setTimeout(() => { $('.title').classList.add('revealed'); }, (REDUCED ? 0 : 1050) + 1700);
 setTimeout(() => { boot.classList.add('out'); document.body.classList.add('ready'); setTimeout(() => boot.remove(), 1000); }, REDUCED ? 0 : 1050);
+})();
+</script>
+<script>
+(() => {
+  const UA_EN = {
+    "Електронний музикант, саунд-продюсер і бітмейкер. Важкий кік, жирний sub-bass і треки, що качають танцпол.": "Electronic musician, sound producer and beatmaker. Heavy kicks, fat sub-bass and tracks that move the dancefloor.",
+    "Пише, зводить і мастерить в Україні.": "Writes, mixes and masters in Ukraine.",
+    "1.3M+ щомісячних слухачів у Spotify": "1.3M+ monthly listeners on Spotify",
+    "Вірусні хардстайл- та худтреп-ремікси": "Viral hardstyle and hoodtrap remixes",
+    "Мільйони прослуховувань у TikTok / Reels / Spotify": "Millions of streams on TikTok / Reels / Spotify",
+    "Зведення та мастеринг": "Mixing & mastering",
+    "Біти на замовлення": "Beats on order",
+    "Hardstyle, hardtekk, jumpstyle та hoodtrap біти під ваш вокал, реліз або контент.": "Hardstyle, hardtekk, jumpstyle and hoodtrap beats for your vocals, release or content.",
+    "Хардстайл-ремікси та едіти — під клуб, TikTok чи Reels.": "Hardstyle remixes and edits for the club, TikTok or Reels.",
+    "Зведення та мастеринг з фокусом на кік, sub-bass і гучність без втрати панчу.": "Mixing and mastering focused on kick, sub-bass and loudness without losing punch.",
+    "Фіти та спільні треки з артистами.": "Features and joint tracks with artists.",
+    "Опиши жанр, BPM, референси та дедлайн — відповідь у Telegram або на пошту.": "Describe the genre, BPM, references and deadline. Reply comes via Telegram or email.",
+    "Попередній трек": "Previous track",
+    "Наступний трек": "Next track",
+    "Відтворити / пауза": "Play / pause",
+    "Відтворити": "Play",
+    "Пауза": "Pause",
+    "Прогрес треку": "Track progress",
+    "Гучність": "Volume",
+    "Перемотування треку": "Seek track",
+    "Перемотування (міні-плеєр)": "Seek (mini player)",
+    "Міні-плеєр": "Mini player",
+    "Головна навігація": "Main navigation",
+    "GoldZoro — на початок": "GoldZoro — back to top",
+    "GoldZoro — портрет артиста": "GoldZoro — artist portrait",
+    "Зевс — хвилястий папуга, талісман студії": "Zeus — wavy budgie, studio mascot",
+    "Зевс на пальці": "Zeus on a finger",
+    "Зевс на пальці біля клавіатури": "Zeus on a finger by the keyboard",
+    "Хвилястий папуга Зевс, крупний план": "Wavy budgie Zeus, close-up",
+    "Клікни, щоб перемкнути фото": "Click to switch photo",
+    "Візуалізатор басових частот": "Bass frequency visualizer",
+    "До треків": "To tracks",
+    "Скопіювати email goldzoroprod@gmail.com": "Copy email goldzoroprod@gmail.com"
+  };
+  const EN_UA = Object.fromEntries(Object.entries(UA_EN).map(([u, e]) => [e, u]));
+  const btn = document.getElementById("langBtn");
+  const ATTRS = ["aria-label", "alt", "title"];
+
+  function translate(map) {
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let n;
+    while ((n = w.nextNode())) {
+      const t = n.nodeValue.trim();
+      if (t && map[t]) n.nodeValue = n.nodeValue.replace(t, map[t]);
+    }
+    document.querySelectorAll("[aria-label],[alt],[title]").forEach(el => {
+      ATTRS.forEach(a => {
+        const v = el.getAttribute(a);
+        if (v && map[v]) el.setAttribute(a, map[v]);
+      });
+    });
+  }
+
+  let lang = "uk";
+  function setLang(next) {
+    if (next === lang) return;
+    translate(next === "en" ? UA_EN : EN_UA);
+    lang = next;
+    document.documentElement.lang = next === "en" ? "en" : "uk";
+    btn.textContent = next === "en" ? "UA" : "EN";
+    btn.setAttribute("aria-label", next === "en" ? "Switch to Ukrainian" : "Switch to English");
+    try { localStorage.setItem("gz-lang", next); } catch (_) {}
+  }
+  btn.addEventListener("click", () => setLang(lang === "uk" ? "en" : "uk"));
+
+  let saved = null;
+  try { saved = localStorage.getItem("gz-lang"); } catch (_) {}
+  if (saved === "en") setLang("en");
 })();
 </script>
 </body>
