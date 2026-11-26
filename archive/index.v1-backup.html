@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GOLDZORO™ — Ukrainian Electronic Producer</title>
+<meta name="description" content="GOLDZORO — український електронний музикант, бітмейкер і продюсер. Hardstyle, Hardtekk, Jumpstyle, Hoodtrap. Треки, біти та співпраця.">
+<meta name="theme-color" content="#0D0F12">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --steel-1: #4A5D6E;
+    --steel-2: #2B3640;
+    --coal: #0D0F12;
+    --ice: #F4F7FA;
+    --frost: #A9C4D6;
+    --frost-soft: rgba(169, 196, 214, .6);
+    --line: rgba(244, 247, 250, .12);
+    --card: rgba(244, 247, 250, .035);
+    --card-hover: rgba(244, 247, 250, .08);
+    --display: 'Bebas Neue', Impact, 'Arial Narrow', sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+    --body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --gutter: 16px;
+    --max: 1200px;
+    color-scheme: dark;
+  }
+  @media (min-width: 768px) { :root { --gutter: 40px; } }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--coal);
+    color: var(--ice);
+    font: 400 16px/1.55 var(--body);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--frost); outline-offset: 3px; }
+
+  /* grain overlay */
+  body::after {
+    content: "";
+    position: fixed; inset: -50%;
+    pointer-events: none;
+    z-index: 100;
+    opacity: .06;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    animation: grain 1.2s steps(6) infinite;
+  }
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); }
+    20% { transform: translate(-3%,2%); }
+    40% { transform: translate(2%,-3%); }
+    60% { transform: translate(-2%,3%); }
+    80% { transform: translate(3%,-1%); }
+  }
+
+  .wrap { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--frost); }
+  .display { font-family: var(--display); font-weight: 400; letter-spacing: .01em; line-height: .9; text-transform: uppercase; margin: 0; }
+  .section { padding: 96px 0; position: relative; }
+  .section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  .section-head h2 { font-size: clamp(56px, 10vw, 128px); }
+  .section-head .mono { text-align: right; }
+
+  /* ---------- Buttons / pills ---------- */
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 20px; border-radius: 999px;
+    border: 1px solid var(--line); background: rgba(13,15,18,.6);
+    font: 500 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+    transition: transform .25s ease, background .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;
+    backdrop-filter: blur(6px);
+  }
+  .pill:hover { background: var(--ice); color: var(--coal); border-color: var(--ice); transform: translateY(-2px); box-shadow: 0 10px 30px -10px rgba(169,196,214,.5); }
+  .pill.solid { background: var(--ice); color: var(--coal); border-color: var(--ice); }
+  .pill.solid:hover { background: var(--frost); border-color: var(--frost); }
+
+  /* ---------- Header ---------- */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    transition: background .3s ease, border-color .3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  .site-header.scrolled { background: rgba(13,15,18,.82); backdrop-filter: blur(12px); border-color: var(--line); }
+  .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+  .logo { font-family: var(--display); font-size: 28px; letter-spacing: .04em; }
+  .logo sup { font-size: 12px; color: var(--frost); vertical-align: top; margin-left: 2px; }
+  .nav-links { display: none; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { font: 500 11px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--frost); transition: color .2s; }
+  .nav-links a:hover { color: var(--ice); }
+  .nav-links a::before { content: "[ "; opacity: .5; }
+  .nav-links a::after { content: " ]"; opacity: .5; }
+  .nav-cta { padding: 9px 14px; font-size: 11px; }
+  @media (min-width: 900px) { .nav-links { display: flex; } }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative; min-height: 100vh; min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 120px 0 0; overflow: hidden;
+    background:
+      radial-gradient(900px 600px at 80% 20%, rgba(74,93,110,.55), transparent 60%),
+      radial-gradient(700px 500px at 0% 100%, rgba(43,54,64,.9), transparent 70%),
+      linear-gradient(180deg, #14181d 0%, var(--coal) 70%);
+  }
+  .hero-photo { position: absolute; inset: 0; z-index: 0; }
+  .hero-photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: 60% 30%;
+    filter: grayscale(.35) contrast(1.08) brightness(.8) saturate(.8);
+    opacity: .9;
+  }
+  .hero-photo::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, var(--coal) 8%, rgba(13,15,18,.35) 55%, rgba(13,15,18,.8) 100%),
+      linear-gradient(0deg, var(--coal) 0%, transparent 40%);
+  }
+  .hero-photo .fallback {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(135deg, rgba(74,93,110,.22) 0 2px, transparent 2px 18px), linear-gradient(160deg, var(--steel-1), var(--steel-2));
+  }
+  .ridge { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 42%; z-index: 1; opacity: .5; pointer-events: none; }
+
+  .hero-content { position: relative; z-index: 2; }
+  .tag {
+    position: absolute; z-index: 2; top: 92px; right: 6%;
+    transform: rotate(-6deg);
+    padding: 10px 16px;
+    background: rgba(244,247,250,.14);
+    border: 1px solid rgba(244,247,250,.25);
+    font: 700 13px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(244,247,250,.9);
+    text-shadow: 0 0 12px rgba(244,247,250,.6);
+    backdrop-filter: blur(3px);
+    filter: url(#spray);
+    border-radius: 2px;
+  }
+  .hero-title {
+    font-size: clamp(96px, 22vw, 300px);
+    line-height: .82;
+    color: var(--ice);
+    text-shadow: 0 0 40px rgba(169,196,214,.15);
+    margin: 0;
+    position: relative;
+  }
+  .hero-title .tm { font-size: .18em; vertical-align: top; color: var(--frost); margin-left: .05em; }
+  .hero-sub { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 22px 0 28px; }
+  .hero-sub span { font: 500 12px/1.4 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--frost); }
+  .hero-sub b { color: var(--ice); font-weight: 700; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+
+  .player-wrap { position: relative; z-index: 2; padding-bottom: 48px; }
+  .player {
+    display: grid; grid-template-columns: auto 1fr; gap: 16px 18px; align-items: center;
+    padding: 18px; max-width: 640px;
+    background: rgba(13,15,18,.72);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 30px 60px -30px rgba(0,0,0,.8);
+  }
+  .player-cover {
+    width: 74px; height: 74px; border-radius: 12px; display: grid; place-items: center;
+    font: 400 34px/1 var(--display); color: rgba(244,247,250,.9);
+    background: linear-gradient(145deg, var(--steel-1), var(--steel-2));
+    border: 1px solid var(--line);
+    position: relative; overflow: hidden;
+  }
+  .player-cover::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 6px, rgba(0,0,0,.18) 6px 7px); }
+  .player-meta { min-width: 0; }
+  .player-title { font: 600 17px/1.2 var(--body); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .player-genre { margin-top: 4px; }
+  .player-controls { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; }
+  .play-btn {
+    width: 52px; height: 52px; border-radius: 50%; flex: 0 0 auto;
+    display: grid; place-items: center;
+    background: var(--ice); color: var(--coal);
+    transition: transform .2s ease, background .2s ease;
+  }
+  .play-btn:hover { transform: scale(1.07); background: var(--frost); }
+  .play-btn svg { width: 18px; height: 18px; }
+  .nav-btn {
+    width: 38px; height: 38px; border-radius: 50%; flex: 0 0 auto; display: grid; place-items: center;
+    border: 1px solid var(--line); color: var(--frost);
+    transition: border-color .2s, color .2s;
+  }
+  .nav-btn:hover { border-color: var(--frost); color: var(--ice); }
+  .nav-btn svg { width: 14px; height: 14px; }
+  .progress { flex: 1; min-width: 0; }
+  .bar {
+    position: relative; height: 6px; border-radius: 6px; background: rgba(244,247,250,.12);
+    cursor: pointer; touch-action: none;
+  }
+  .bar-fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 6px; background: linear-gradient(90deg, var(--steel-1), var(--frost)); box-shadow: 0 0 12px rgba(169,196,214,.5); }
+  .bar-knob { position: absolute; top: 50%; left: 0; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--ice); box-shadow: 0 0 10px var(--frost); transform: scale(0); transition: transform .2s; }
+  .bar:hover .bar-knob, .bar.dragging .bar-knob { transform: scale(1); }
+  .times { display: flex; justify-content: space-between; margin-top: 8px; font: 500 11px/1 var(--mono); color: var(--frost); letter-spacing: .08em; }
+  .wave { display: flex; align-items: flex-end; gap: 3px; height: 26px; margin-left: auto; }
+  .wave i { display: block; width: 3px; height: 30%; background: var(--frost); border-radius: 2px; opacity: .55; transform-origin: bottom; }
+  .player.playing .wave i { animation: wave 1s ease-in-out infinite; opacity: .9; }
+  .wave i:nth-child(3n) { animation-delay: -.3s; }
+  .wave i:nth-child(4n) { animation-delay: -.6s; }
+  .wave i:nth-child(5n) { animation-delay: -.15s; }
+  @keyframes wave { 0%,100% { height: 20%; } 50% { height: 100%; } }
+  .player-note { font: 400 11px/1.4 var(--mono); color: rgba(169,196,214,.6); margin: 12px 0 0; max-width: 640px; }
+
+  .scroll-cue {
+    position: absolute; right: var(--gutter); bottom: 22px; z-index: 2;
+    writing-mode: vertical-rl; font: 500 10px/1 var(--mono); letter-spacing: .24em; text-transform: uppercase; color: var(--frost-soft);
+  }
+  @media (max-width: 899px) { .scroll-cue { display: none; } }
+
+  /* ---------- Tracks ---------- */
+  .tracks-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  @media (min-width: 640px) { .tracks-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .tracks-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .card {
+    position: relative; overflow: hidden;
+    border-radius: 18px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    transition: transform .4s cubic-bezier(.2,.7,.2,1), background .4s ease, border-color .4s ease, box-shadow .4s ease;
+    display: flex; flex-direction: column;
+    cursor: pointer;
+  }
+  .card:hover { transform: translateY(-6px); background: var(--card-hover); border-color: rgba(169,196,214,.45); box-shadow: 0 24px 50px -24px rgba(169,196,214,.35); }
+  .card.active { border-color: var(--frost); }
+  .card-art {
+    position: relative; aspect-ratio: 1 / 1; overflow: hidden;
+    background: linear-gradient(150deg, var(--steel-1), var(--steel-2) 60%, var(--coal));
+    display: grid; place-items: center;
+  }
+  .card-art .big { font: 400 clamp(72px, 12vw, 110px)/1 var(--display); color: rgba(244,247,250,.14); letter-spacing: .02em; transition: transform .6s ease, color .6s; }
+  .card:hover .card-art .big { transform: scale(1.08) rotate(-2deg); color: rgba(244,247,250,.22); }
+  .card-art .stripes { position: absolute; inset: 0; background: repeating-linear-gradient(115deg, transparent 0 14px, rgba(244,247,250,.04) 14px 15px); }
+  .card-art .tagline { position: absolute; left: 12px; top: 12px; }
+  .card-art .idx { position: absolute; right: 12px; top: 12px; }
+  .card-play {
+    position: absolute; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--ice); color: var(--coal);
+    opacity: 0; transform: scale(.7); transition: opacity .3s ease, transform .3s cubic-bezier(.2,.7,.2,1);
+  }
+  .card-play svg { width: 20px; height: 20px; margin-left: 3px; }
+  .card:hover .card-play, .card:focus-within .card-play, .card.active .card-play { opacity: 1; transform: scale(1); }
+  .card-body { padding: 18px 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .card-title { font: 800 20px/1.15 var(--body); margin: 0; letter-spacing: -.01em; }
+  .card-meta { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: auto; }
+  .genre-chip { font: 700 10px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; border: 1px solid rgba(169,196,214,.4); color: var(--frost); }
+  .card-links a { font: 500 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--frost-soft); transition: color .2s; }
+  .card-links a:hover { color: var(--ice); }
+  .tracks-foot { margin-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+
+  /* ---------- About ---------- */
+  .about { background: linear-gradient(180deg, var(--coal), #101418 50%, var(--coal)); overflow: hidden; }
+  .about-bg {
+    position: absolute; left: 0; right: 0; top: 40px; text-align: center; pointer-events: none; user-select: none;
+    font: 400 clamp(140px, 30vw, 420px)/0.8 var(--display); color: transparent;
+    -webkit-text-stroke: 1px rgba(169,196,214,.12); letter-spacing: .02em; white-space: nowrap;
+  }
+  .about .section-head { position: relative; }
+  .about-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  @media (min-width: 860px) {
+    .about-grid { grid-template-columns: 1.1fr 1fr; }
+    .card-bio { grid-row: span 2; }
+  }
+  .glass { padding: 26px; border-radius: 18px; background: rgba(13,15,18,.7); border: 1px solid var(--line); backdrop-filter: blur(8px); transition: border-color .3s, transform .4s; }
+  .glass:hover { border-color: rgba(169,196,214,.45); transform: translateY(-3px); }
+  .glass h3 { font: 400 44px/.95 var(--display); margin: 10px 0 14px; letter-spacing: .01em; }
+  .glass p { margin: 0 0 14px; color: rgba(244,247,250,.78); }
+  .glass p:last-child { margin-bottom: 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; border-top: 1px solid var(--line); padding-top: 18px; }
+  .stats b { display: block; font: 400 44px/1 var(--display); color: var(--ice); }
+  .stats span { font: 500 10px/1.3 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--frost); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chips span { font: 500 11px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; padding: 8px 12px; border-radius: 999px; background: rgba(244,247,250,.06); border: 1px solid var(--line); }
+
+  .zeus-card { padding: 0; overflow: hidden; position: relative; }
+  .zeus-card .photo { position: relative; aspect-ratio: 4 / 4.2; background: linear-gradient(160deg, var(--steel-1), var(--steel-2)); overflow: hidden; }
+  .zeus-card .photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .8s; filter: saturate(.85) contrast(1.05); }
+  .zeus-card:hover .photo img { transform: scale(1.06); filter: saturate(1.1) contrast(1.1); }
+  .zeus-card .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13,15,18,.85), transparent 45%); pointer-events: none; }
+  .zeus-card .label { position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 2; }
+  .zeus-card .label .display { font-size: 56px; }
+  .zeus-card .label .mono { color: var(--frost); }
+  .zeus-card .corner { position: absolute; top: 14px; left: 14px; z-index: 2; }
+  .zeus-second { position: absolute; right: 14px; top: 14px; z-index: 2; width: 92px; height: 92px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(244,247,250,.3); box-shadow: 0 10px 30px rgba(0,0,0,.5); transform: rotate(4deg); }
+  .zeus-second img { width: 100%; height: 100%; object-fit: cover; }
+  .badge-num { display: inline-block; padding: 6px 9px; border: 1px solid rgba(244,247,250,.6); font: 700 11px/1 var(--mono); letter-spacing: .12em; background: rgba(13,15,18,.4); }
+
+  /* ---------- Beats banner ---------- */
+  .beats { padding: 0 0 96px; }
+  .banner {
+    position: relative; overflow: hidden; border-radius: 26px;
+    padding: clamp(36px, 7vw, 84px) clamp(20px, 5vw, 64px);
+    background:
+      radial-gradient(600px 300px at 90% 0%, rgba(169,196,214,.22), transparent 70%),
+      linear-gradient(135deg, var(--steel-1) 0%, var(--steel-2) 55%, var(--coal) 100%);
+    border: 1px solid var(--line);
+    isolation: isolate;
+  }
+  .banner::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; opacity: .18;
+    background: repeating-linear-gradient(90deg, rgba(244,247,250,.5) 0 1px, transparent 1px 28px);
+  }
+  .banner .graffiti {
+    position: absolute; right: -10px; top: 26px; transform: rotate(7deg);
+    font: 400 clamp(60px, 14vw, 170px)/1 var(--display); color: rgba(244,247,250,.1);
+    -webkit-text-stroke: 2px rgba(244,247,250,.18); pointer-events: none; white-space: nowrap;
+  }
+  .banner h2 { font-size: clamp(56px, 11vw, 150px); line-height: .85; max-width: 12ch; margin: 14px 0 22px; }
+  .banner .lines { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-bottom: 34px; }
+  .banner .lines span { font: 700 13px/1 var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--ice); padding-bottom: 6px; border-bottom: 2px solid var(--frost); }
+  .banner p { max-width: 560px; color: rgba(244,247,250,.8); margin: 0 0 30px; font-size: 17px; }
+  .banner .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* ---------- Links ---------- */
+  .links { background: #0f1216; border-top: 1px solid var(--line); }
+  .links-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  @media (min-width: 560px) { .links-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .links-grid { grid-template-columns: repeat(3, 1fr); } }
+  .link-tile {
+    display: flex; align-items: center; gap: 14px; padding: 16px 18px; border-radius: 14px;
+    background: var(--card); border: 1px solid var(--line);
+    transition: transform .25s ease, background .25s ease, border-color .25s ease;
+    text-align: left; width: 100%;
+  }
+  .link-tile:hover { transform: translateY(-3px); background: var(--card-hover); border-color: var(--frost); }
+  .link-ico {
+    width: 40px; height: 40px; flex: 0 0 auto; border-radius: 10px; display: grid; place-items: center;
+    background: linear-gradient(145deg, var(--steel-1), var(--steel-2)); border: 1px solid var(--line);
+    font: 700 12px/1 var(--mono); color: var(--ice);
+  }
+  .link-text { min-width: 0; flex: 1; }
+  .link-text strong { display: block; font: 600 15px/1.2 var(--body); }
+  .link-text small { display: block; font: 400 11px/1.4 var(--mono); color: var(--frost-soft); letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .link-arrow { font: 400 18px/1 var(--mono); color: var(--frost); transition: transform .25s; }
+  .link-tile:hover .link-arrow { transform: translate(3px, -3px); }
+
+  .footer { padding: 40px 0 56px; border-top: 1px solid var(--line); }
+  .footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+  .footer .logo { font-size: 40px; }
+  .footer small { font: 400 11px/1.6 var(--mono); color: var(--frost-soft); letter-spacing: .06em; }
+
+  /* ---------- Toast ---------- */
+  .toast {
+    position: fixed; left: 50%; bottom: 24px; z-index: 200;
+    transform: translate(-50%, 140%); opacity: 0;
+    padding: 14px 22px; border-radius: 999px;
+    background: var(--ice); color: var(--coal);
+    font: 700 13px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+    transition: transform .4s cubic-bezier(.2,.9,.3,1.2), opacity .3s ease;
+    box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    pointer-events: none;
+  }
+  .toast.show { transform: translate(-50%, 0); opacity: 1; }
+
+  /* ---------- Reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 560px) {
+    .hero { padding-top: 110px; }
+    .tag { top: 80px; right: 12px; font-size: 11px; }
+    .player { grid-template-columns: 1fr; }
+    .player-cover { width: 100%; height: auto; aspect-ratio: 1; max-width: 160px; }
+    .wave { display: none; }
+    .section { padding: 72px 0; }
+    .nav-cta { padding: 8px 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Spray-paint filter for the graffiti tag -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="spray"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="3"/></filter>
+</svg>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="header">
+  <div class="wrap nav">
+    <a href="#top" class="logo" aria-label="GOLDZORO — на початок">GOLDZORO<sup>™</sup></a>
+    <ul class="nav-links">
+      <li><a href="#tracks">Tracks</a></li>
+      <li><a href="#beats">Beats</a></li>
+      <li><a href="#about">About &amp; Zeus</a></li>
+      <li><a href="#links">Links</a></li>
+    </ul>
+    <a href="https://t.me/nepozer90" target="_blank" rel="noopener" class="pill solid nav-cta">Contact</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-photo" aria-hidden="true">
+    <div class="fallback"></div>
+    <img src="assets/artist.webp" alt="" onerror="this.remove()">
+  </div>
+
+  <svg class="ridge" viewBox="0 0 1440 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0,300 L120,210 L220,260 L360,140 L480,240 L600,170 L720,280 L860,120 L990,230 L1100,160 L1240,250 L1340,190 L1440,240 L1440,400 L0,400 Z" fill="#14181d" stroke="rgba(169,196,214,.25)" stroke-width="1.2"/>
+    <path d="M0,350 L180,290 L330,330 L520,270 L700,330 L900,280 L1080,330 L1260,290 L1440,320 L1440,400 L0,400 Z" fill="#0D0F12"/>
+  </svg>
+
+  <div class="tag" aria-hidden="true">Hardstyle // Hardtekk // Hoodtrap</div>
+
+  <div class="wrap hero-content reveal in">
+    <p class="mono" style="margin:0 0 18px">Ukrainian Electronic Producer // 1.3M+ Monthly Listeners</p>
+    <h1 class="display hero-title">GOLDZORO<span class="tm">™</span></h1>
+    <div class="hero-sub">
+      <span>Genres <b>/ Hardstyle · Hardtekk · Jumpstyle · Hoodtrap</b></span>
+      <span>Spotify <b>1.3M+</b> monthly</span>
+    </div>
+    <div class="hero-actions">
+      <a href="#tracks" class="pill solid">Listen now</a>
+      <a href="#beats" class="pill">Order a beat</a>
+    </div>
+  </div>
+
+  <div class="wrap player-wrap reveal in" id="player">
+    <div class="player" id="playerBox">
+      <div class="player-cover" id="pCover">GZ</div>
+      <div class="player-meta">
+        <div class="player-title" id="pTitle">Select a track</div>
+        <div class="mono player-genre" id="pGenre">—</div>
+      </div>
+      <div class="player-controls">
+        <button class="nav-btn" id="prevBtn" type="button" aria-label="Попередній трек">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
+        </button>
+        <button class="play-btn" id="playBtn" type="button" aria-label="Відтворити">
+          <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="nav-btn" id="nextBtn" type="button" aria-label="Наступний трек">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>
+        </button>
+        <div class="progress">
+          <div class="bar" id="bar" role="slider" aria-label="Прогрес треку" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="bar-fill" id="barFill"></div>
+            <div class="bar-knob" id="barKnob"></div>
+          </div>
+          <div class="times"><span id="tCur">0:00</span><span id="tDur">0:00</span></div>
+        </div>
+        <div class="wave" aria-hidden="true">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    </div>
+    <p class="player-note">// Прев'ю без аудіофайлів: додай mp3-посилання в поле <code>src</code> масиву TRACKS, щоб грати реальні фрагменти.</p>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">Scroll // Tracks</div>
+</section>
+
+<!-- ============ TRACKS ============ -->
+<section class="section" id="tracks">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="display">Top Tracks</h2>
+      <span class="mono">Releases &amp; Remixes<br>[ 05 ] entries</span>
+    </div>
+
+    <div class="tracks-grid" id="tracksGrid"></div>
+
+    <div class="tracks-foot reveal">
+      <span class="mono">Більше — на Spotify та YouTube</span>
+      <a class="pill" href="https://open.spotify.com/artist/2Lt1XDr9KkZkPtYyJvAQdM" target="_blank" rel="noopener">Open Spotify ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="section about" id="about">
+  <div class="about-bg" aria-hidden="true">ABOUT</div>
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="display">About</h2>
+      <span class="mono">Know me<br>// Studio &amp; Zeus</span>
+    </div>
+
+    <div class="about-grid">
+      <article class="glass card-bio reveal">
+        <span class="mono">[ 01 ] — Producer</span>
+        <h3>GOLDZORO</h3>
+        <p>Український електронний продюсер, бітмейкер і сайд-менеджер. Створюю жорсткий, важкий звук для танцпідлоги: hardstyle, hardtekk, jumpstyle та hoodtrap.</p>
+        <p>Ремікси й оригінальні треки, які набрали понад 1,3 млн слухачів на місяць у Spotify. Робота з артистами та лейблами — від одного ремікса до повного реліз-пакету.</p>
+        <div class="stats">
+          <div><b>1.3M+</b><span>Monthly listeners</span></div>
+          <div><b>4</b><span>Core genres</span></div>
+          <div><b>UA</b><span>Forged in Ukraine</span></div>
+        </div>
+        <div class="chips">
+          <span>Remixes</span><span>Custom beats</span><span>Mixing / Mastering</span><span>Collabs</span>
+        </div>
+      </article>
+
+      <article class="glass reveal">
+        <span class="mono">[ 02 ] — Studio</span>
+        <h3>Production</h3>
+        <p>Біти та семпли, зібрані під танцпол і під голову. Кожен трек проходить через кілька ітерацій, поки не звучить правильно на гучній системі.</p>
+        <div class="chips"><span>Hardstyle kicks</span><span>Reese bass</span><span>Trap 808s</span><span>Jump drums</span></div>
+      </article>
+
+      <article class="glass zeus-card reveal" aria-label="Папуга Зевс — талісман студії">
+        <div class="photo">
+          <img src="assets/zeus-1.webp" alt="Хвилястий папуга Зевс, крупний план" onerror="this.remove()">
+          <div class="zeus-second"><img src="assets/zeus-2.webp" alt="Зевс на пальці" loading="lazy" onerror="this.parentElement.remove()"></div>
+          <div class="corner"><span class="badge-num">#001</span></div>
+          <div class="label">
+            <p class="mono" style="margin:0 0 6px">Хвилястий папуга // Mascot</p>
+            <h3 class="display" style="margin:0">ZEUS</h3>
+            <p class="mono" style="margin:6px 0 0;color:var(--ice)">STUDIO SUPERVISOR</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEATS & COLLABORATION ============ -->
+<section class="section beats" id="beats">
+  <div class="wrap">
+    <div class="banner reveal">
+      <span class="graffiti" aria-hidden="true">GOLDZORO</span>
+      <span class="mono">// Beats &amp; Collaboration</span>
+      <h2 class="display">Built for bass.<br>Made for the crowd.</h2>
+      <div class="lines"><span>Built for bass</span><span>Made for the crowd</span><span>Forged in Ukraine</span></div>
+      <p>Замов біт, ремікс або спільний трек. Напиши в Telegram, заходь у канал з бітами або скопіюй пошту — відповідаю особисто.</p>
+      <div class="actions">
+        <a class="pill solid" href="https://t.me/nepozer90" target="_blank" rel="noopener">Write on Telegram ↗</a>
+        <a class="pill" href="https://t.me/GoldZoroprod" target="_blank" rel="noopener">Beats channel ↗</a>
+        <button class="pill" data-copy="goldzoroprod@gmail.com" type="button">Copy email</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LINKS ============ -->
+<section class="section links" id="links">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2 class="display">All Platforms</h2>
+      <span class="mono">Stream · Follow · Contact</span>
+    </div>
+    <div class="links-grid" id="linksGrid"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-row">
+    <div>
+      <div class="logo">GOLDZORO<sup>™</sup></div>
+      <small>© <span id="year">2026</span> GOLDZORO // All rights reserved</small>
+    </div>
+    <small>Hardstyle · Hardtekk · Jumpstyle · Hoodtrap<br>Ukraine</small>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Copied!</div>
+
+<script>
+/* ============================================================
+   DATA
+   Жанри й назви треків — за брифом; роки і прев'ю заповни пізніше.
+   ============================================================ */
+const TRACKS = [
+  { title: "I Kissed a Girl (Hardstyle Remix)", genre: "HARDSTYLE", year: "—", short: "IKG", src: "" },
+  { title: "Shape of You (Remix)",              genre: "HARDTEKK",  year: "—", short: "SOY", src: "" },
+  { title: "Believer (Hardstyle)",              genre: "HARDSTYLE", year: "—", short: "BLV", src: "" },
+  { title: "Розчиняюсь у тобі (Remix)",         genre: "HOODTRAP",  year: "—", short: "РТ",  src: "" },
+  { title: "Hoodtrap / Jumpstyle Originals",    genre: "JUMPSTYLE", year: "—", short: "HJ",  src: "" }
+];
+
+const LINKS = [
+  { name: "Spotify",            url: "https://open.spotify.com/artist/2Lt1XDr9KkZkPtYyJvAQdM",           sub: "open.spotify.com / artist", ico: "SP" },
+  { name: "Apple Music",        url: "https://music.apple.com/ua/artist/goldzoro/1760713803",            sub: "music.apple.com / ua",      ico: "AM" },
+  { name: "YouTube Music",      url: "https://music.youtube.com/channel/UCTFusmXKkp948BMIuJoG3tQ",       sub: "music.youtube.com",         ico: "YM" },
+  { name: "YouTube",            url: "https://www.youtube.com/@goldzzoro2",                              sub: "youtube.com / @goldzzoro2", ico: "YT" },
+  { name: "SoundCloud",         url: "https://soundcloud.com/gold-zzoro",                                sub: "soundcloud.com / main",     ico: "SC" },
+  { name: "SoundCloud Archive", url: "https://soundcloud.com/goldzzzoro",                                sub: "soundcloud.com / archive",  ico: "AR" },
+  { name: "UA Music",           url: "https://uamusic.io/artists/goldzoro",                              sub: "uamusic.io",                ico: "UA" },
+  { name: "Shazam",             url: "https://www.shazam.com/ru-ru/artist/goldzoro/1731831659/releases", sub: "shazam.com / releases",     ico: "SH" },
+  { name: "Telegram — Main",    url: "https://t.me/GoldZZoro",                                           sub: "t.me/GoldZZoro",            ico: "TG" },
+  { name: "Telegram — Beats",   url: "https://t.me/GoldZoroprod",                                        sub: "t.me/GoldZoroprod",         ico: "BT" },
+  { name: "Telegram — Orders",  url: "https://t.me/nepozer90",                                           sub: "t.me/nepozer90",            ico: "OR" },
+  { name: "Email",              url: "",                                                                 sub: "goldzoroprod@gmail.com · натисни, щоб скопіювати", ico: "@", copy: "goldzoroprod@gmail.com" }
+];
+
+const PLAY_ICON  = '<path d="M8 5v14l11-7z"/>';
+const PAUSE_ICON = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+const SIM_LEN = 180; // секунд, якщо у треку немає src
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+const $ = (s, root = document) => root.querySelector(s);
+const fmt = (s) => {
+  if (!isFinite(s) || s < 0) s = 0;
+  const m = Math.floor(s / 60), r = Math.floor(s % 60);
+  return m + ":" + String(r).padStart(2, "0");
+};
+const esc = (s) => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+/* ============================================================
+   RENDER: TRACK CARDS
+   ============================================================ */
+const grid = $("#tracksGrid");
+grid.innerHTML = TRACKS.map((t, i) => `
+  <article class="card reveal" data-i="${i}" tabindex="0" role="button" aria-label="Відтворити: ${esc(t.title)}">
+    <div class="card-art">
+      <div class="stripes"></div>
+      <span class="big" aria-hidden="true">${esc(t.short)}</span>
+      <span class="mono tagline">GZ // ${String(i + 1).padStart(3, "0")}</span>
+      <span class="mono idx">${esc(t.year)}</span>
+      <span class="card-play" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">${PLAY_ICON}</svg>
+      </span>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">${esc(t.title)}</h3>
+      <div class="card-meta">
+        <span class="genre-chip">${esc(t.genre)}</span>
+        <div class="card-links">
+          <a href="https://open.spotify.com/artist/2Lt1XDr9KkZkPtYyJvAQdM" target="_blank" rel="noopener">Spotify ↗</a>
+        </div>
+      </div>
+    </div>
+  </article>`).join("");
+
+function activateCard(card) {
+  loadTrack(+card.dataset.i, true);
+  $("#player").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+grid.addEventListener("click", (e) => {
+  if (e.target.closest("a")) return;
+  const card = e.target.closest(".card");
+  if (card) activateCard(card);
+});
+grid.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const card = e.target.closest(".card");
+  if (card) { e.preventDefault(); activateCard(card); }
+});
+
+/* ============================================================
+   RENDER: LINK TILES
+   ============================================================ */
+$("#linksGrid").innerHTML = LINKS.map(l => {
+  if (l.copy) {
+    return `
+    <button type="button" class="link-tile reveal" data-copy="${esc(l.copy)}">
+      <span class="link-ico" aria-hidden="true">${esc(l.ico)}</span>
+      <span class="link-text"><strong>${esc(l.name)}</strong><small>${esc(l.sub)}</small></span>
+      <span class="link-arrow" aria-hidden="true">⧉</span>
+    </button>`;
+  }
+  return `
+    <a class="link-tile reveal" href="${esc(l.url)}" target="_blank" rel="noopener">
+      <span class="link-ico" aria-hidden="true">${esc(l.ico)}</span>
+      <span class="link-text"><strong>${esc(l.name)}</strong><small>${esc(l.sub)}</small></span>
+      <span class="link-arrow" aria-hidden="true">↗</span>
+    </a>`;
+}).join("");
+
+/* ============================================================
+   PLAYER
+   Без src — симуляція прогресу (SIM_LEN). Зі src — реальний <audio>.
+   ============================================================ */
+const audio = new Audio();
+audio.preload = "none";
+let cur = 0;
+let playing = false;
+let simTime = 0;
+let simRaf = null;
+let lastTs = 0;
+
+const el = {
+  box: $("#playerBox"), cover: $("#pCover"), title: $("#pTitle"), genre: $("#pGenre"),
+  play: $("#playBtn"), icon: $("#playIcon"), prev: $("#prevBtn"), next: $("#nextBtn"),
+  bar: $("#bar"), fill: $("#barFill"), knob: $("#barKnob"), cur: $("#tCur"), dur: $("#tDur")
+};
+
+const hasSrc = () => !!TRACKS[cur].src;
+
+function trackDuration() {
+  if (hasSrc() && isFinite(audio.duration) && audio.duration > 0) return audio.duration;
+  return SIM_LEN;
+}
+function trackPosition() {
+  return hasSrc() ? audio.currentTime : simTime;
+}
+
+function renderProgress() {
+  const d = trackDuration(), p = trackPosition();
+  const pct = d ? Math.min(100, (p / d) * 100) : 0;
+  el.fill.style.width = pct + "%";
+  el.knob.style.left = pct + "%";
+  el.bar.setAttribute("aria-valuenow", Math.round(pct));
+  el.cur.textContent = fmt(p);
+  el.dur.textContent = fmt(d);
+}
+
+function setPlayingUI(on) {
+  playing = on;
+  el.icon.innerHTML = on ? PAUSE_ICON : PLAY_ICON;
+  el.play.setAttribute("aria-label", on ? "Пауза" : "Відтворити");
+  el.box.classList.toggle("playing", on);
+  document.querySelectorAll(".card").forEach((c, i) => c.classList.toggle("active", i === cur && on));
+}
+
+function loadTrack(i, autoplay = false) {
+  pause();
+  cur = (i + TRACKS.length) % TRACKS.length;
+  const t = TRACKS[cur];
+  el.title.textContent = t.title;
+  el.genre.textContent = t.genre + " · " + t.year;
+  el.cover.textContent = t.short;
+  simTime = 0;
+  if (hasSrc()) { audio.src = t.src; audio.load(); } else { audio.removeAttribute("src"); audio.load(); }
+  renderProgress();
+  document.querySelectorAll(".card").forEach((c, idx) => c.classList.toggle("active", idx === cur && playing));
+  if (autoplay) play();
+}
+
+function play() {
+  if (hasSrc()) {
+    audio.play().then(() => setPlayingUI(true)).catch(() => setPlayingUI(false));
+  } else {
+    setPlayingUI(true);
+    startSim();
+  }
+}
+function pause() {
+  if (hasSrc()) audio.pause();
+  stopSim();
+  setPlayingUI(false);
+}
+function togglePlay() { playing ? pause() : play(); }
+
+function startSim() {
+  stopSim();
+  lastTs = performance.now();
+  const tick = (ts) => {
+    simTime += (ts - lastTs) / 1000;
+    lastTs = ts;
+    if (simTime >= SIM_LEN) { simTime = SIM_LEN; renderProgress(); nextTrack(true); return; }
+    renderProgress();
+    simRaf = requestAnimationFrame(tick);
+  };
+  simRaf = requestAnimationFrame(tick);
+}
+function stopSim() {
+  if (simRaf) cancelAnimationFrame(simRaf);
+  simRaf = null;
+}
+
+function nextTrack(autoplay) { loadTrack(cur + 1, autoplay); }
+function prevTrack() { loadTrack(cur - 1, playing); }
+
+audio.addEventListener("timeupdate", renderProgress);
+audio.addEventListener("loadedmetadata", renderProgress);
+audio.addEventListener("ended", () => nextTrack(true));
+audio.addEventListener("error", () => { if (hasSrc()) setPlayingUI(false); });
+
+el.play.addEventListener("click", togglePlay);
+el.next.addEventListener("click", () => nextTrack(playing));
+el.prev.addEventListener("click", prevTrack);
+
+function seekTo(sec) {
+  if (hasSrc()) {
+    if (isFinite(audio.duration)) audio.currentTime = sec;
+  } else {
+    simTime = sec;
+  }
+  renderProgress();
+}
+function seekFromEvent(clientX) {
+  const rect = el.bar.getBoundingClientRect();
+  const ratio = Math.min(1, Math.max(0, (clientX - rect.left) / rect.width));
+  seekTo(ratio * trackDuration());
+}
+
+let dragging = false;
+el.bar.addEventListener("pointerdown", (e) => {
+  dragging = true;
+  el.bar.classList.add("dragging");
+  el.bar.setPointerCapture(e.pointerId);
+  seekFromEvent(e.clientX);
+});
+el.bar.addEventListener("pointermove", (e) => { if (dragging) seekFromEvent(e.clientX); });
+const endDrag = () => { dragging = false; el.bar.classList.remove("dragging"); };
+el.bar.addEventListener("pointerup", endDrag);
+el.bar.addEventListener("pointercancel", endDrag);
+el.bar.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowRight") { seekTo(Math.min(trackDuration(), trackPosition() + 5)); }
+  else if (e.key === "ArrowLeft") { seekTo(Math.max(0, trackPosition() - 5)); }
+  else if (e.key === " " || e.key === "Enter") { e.preventDefault(); togglePlay(); }
+});
+
+// Пробіл — play/pause, якщо фокус не в полі вводу
+document.addEventListener("keydown", (e) => {
+  const tag = document.activeElement && document.activeElement.tagName;
+  if (e.code === "Space" && !/INPUT|TEXTAREA|SELECT|BUTTON|A/.test(tag) && document.activeElement !== el.bar) {
+    e.preventDefault();
+    togglePlay();
+  }
+});
+
+loadTrack(0, false);
+
+/* ============================================================
+   COPY TO CLIPBOARD + TOAST
+   ============================================================ */
+const toast = $("#toast");
+let toastTimer = null;
+function showToast(msg) {
+  toast.textContent = msg;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+}
+async function copyText(text) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  } catch (_) { /* fallback below */ }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch (_) {
+    return false;
+  }
+}
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest("[data-copy]");
+  if (!btn) return;
+  e.preventDefault();
+  const ok = await copyText(btn.dataset.copy);
+  showToast(ok ? "Copied!" : "Copy failed");
+});
+
+/* ============================================================
+   HEADER on scroll + REVEAL on scroll
+   ============================================================ */
+const header = $("#header");
+const onScroll = () => header.classList.toggle("scrolled", window.scrollY > 40);
+window.addEventListener("scroll", onScroll, { passive: true });
+onScroll();
+
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(en => {
+    if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+  });
+}, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+document.querySelectorAll(".reveal").forEach(n => io.observe(n));
+
+$("#year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
